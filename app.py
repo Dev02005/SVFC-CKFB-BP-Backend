@@ -12,7 +12,6 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import os
 import logging
-from functools import wraps
 import bcrypt
 import re
 
@@ -211,6 +210,11 @@ def home():
         logger.error(f"Error serving index.html: {str(e)}")
         return jsonify({"error": "Could not load POS system"}), 500
 
+@app.route("/index.html")
+def index_html():
+    """Serve main POS system (alternative route)"""
+    return home()
+
 @app.route("/analytics.html")
 def analytics():
     """Serve analytics dashboard"""
@@ -222,6 +226,16 @@ def analytics():
     except Exception as e:
         logger.error(f"Error serving analytics.html: {str(e)}")
         return jsonify({"error": "Could not load analytics"}), 500
+
+@app.route("/analytics")
+def analytics_route():
+    """Serve analytics dashboard (alternative route)"""
+    return analytics()
+
+@app.route("/index")
+def index_route():
+    """Serve main POS system (alternative route without .html)"""
+    return home()
 
 @app.route("/login.html")
 def serve_login():
@@ -239,6 +253,11 @@ def serve_login():
         import traceback
         logger.error(traceback.format_exc())
         return jsonify({"error": "Could not load login page", "detail": str(e)}), 500
+
+@app.route("/login")
+def login():
+    """Serve login page (alternative route)"""
+    return serve_login()
 
 # ============ AUTHENTICATION ============
 
@@ -311,23 +330,72 @@ def verify_token():
         logger.error(f"Token verification error: {str(e)}")
         return jsonify({"success": False, "error": "Invalid token"}), 401
 
+def check_and_reset_daily_counter():
+    """Check if 24 hours have passed and reset counter if needed"""
+    try:
+        # Get or initialize counter from database
+        counter = counter_col.find_one({"_id": "token"})
+        
+        if not counter:
+            # Initialize new counter
+            counter_col.insert_one({
+                "_id": "token",
+                "value": 0,
+                "lastReset": datetime.now()
+            })
+            return 0, False
+        
+        # Check if 24 hours have passed since last reset
+        last_reset = counter.get("lastReset", datetime.now())
+        hours_passed = (datetime.now() - last_reset).total_seconds() / 3600
+        
+        # Reset counter to 1 if 24 hours have passed
+        if hours_passed >= 24:
+            counter_col.update_one(
+                {"_id": "token"},
+                {"$set": {"value": 1, "lastReset": datetime.now()}}
+            )
+            logger.info(f"♻️ Daily Bill Counter Reset - Bill #1 {hours_passed:.1f} hours elapsed since last reset")
+            return 1, True
+        
+        # Return current value and reset status
+        return counter.get("value", 0), False
+        
+    except Exception as e:
+        logger.error(f"Error in counter reset check: {str(e)}")
+        return 0, False
+
 @app.route("/api/token", methods=["GET"])
 def get_token():
-    """Generate and return next bill token number"""
+    """Fetch and increment bill token from database"""
     try:
+        # Check and reset if 24 hours have passed
+        current_value, was_reset = check_and_reset_daily_counter()
+        
+        # If just reset, return 1 without incrementing
+        if was_reset:
+            logger.info(f"Bill counter reset detected - Returning Bill #1")
+            return jsonify({
+                "success": True,
+                "token": 1
+            }), 200
+        
+        # Increment counter and get new value from database
         token_doc = counter_col.find_one_and_update(
             {"_id": "token"},
             {"$inc": {"value": 1}},
-            upsert=True,
             return_document=True
         )
         
         if not token_doc or "value" not in token_doc:
-            raise ValueError("Failed to generate token")
+            raise ValueError("Failed to fetch token from database")
+        
+        bill_number = token_doc["value"]
+        logger.debug(f"Bill #{bill_number} generated from database counter")
         
         return jsonify({
             "success": True,
-            "token": token_doc["value"]
+            "token": bill_number
         }), 200
     
     except Exception as e:
@@ -339,58 +407,32 @@ def get_token():
 
 @app.route("/api/token/current", methods=["GET"])
 def get_current_token():
-    """Get current bill token number without incrementing - fetches latest from database"""
+    """Fetch current bill token from database without incrementing"""
     try:
-        # First, get the latest bill number from the database
-        latest_bill = bills_col.find_one(
-            {},
-            sort=[("token", -1)]
-        )
+        # Check and reset if 24 hours have passed
+        current_value, was_reset = check_and_reset_daily_counter()
         
-        # Get the counter document
+        # If just reset, return 1
+        if was_reset:
+            return jsonify({
+                "success": True,
+                "token": 1
+            }), 200
+        
+        # Fetch current value from database
         token_doc = counter_col.find_one({"_id": "token"})
         
-        # Determine the current value
-        db_value = latest_bill.get("token", 0) if latest_bill else 0
-        
-        # If no counter exists yet, initialize it with the database value
         if not token_doc:
-            counter_col.insert_one({"_id": "token", "value": db_value, "lastReset": datetime.now()})
-            current_value = db_value
-        else:
-            # Check if 24 hours have passed since last reset
-            last_reset = token_doc.get("lastReset")
-            if last_reset:
-                hours_passed = (datetime.now() - last_reset).total_seconds() / 3600
-                if hours_passed >= 24:
-                    # Reset counter to 0
-                    counter_col.update_one(
-                        {"_id": "token"},
-                        {"$set": {"value": 0, "lastReset": datetime.now()}}
-                    )
-                    current_value = 0
-                else:
-                    # Use the maximum of counter value and database value to ensure continuity
-                    counter_value = token_doc.get("value", 0)
-                    current_value = max(counter_value, db_value)
-                    
-                    # Sync counter if database has higher value
-                    if db_value > counter_value:
-                        counter_col.update_one(
-                            {"_id": "token"},
-                            {"$set": {"value": db_value}}
-                        )
-            else:
-                # No lastReset field, add it and sync with database
-                current_value = max(token_doc.get("value", 0), db_value)
-                counter_col.update_one(
-                    {"_id": "token"},
-                    {"$set": {"lastReset": datetime.now(), "value": current_value}}
-                )
+            token_doc = {"value": 0}
+        
+        current_bill_number = token_doc.get("value", 0)
+        next_bill_number = current_bill_number + 1
+        
+        logger.debug(f"Current Bill: #{current_bill_number}, Next Bill will be: #{next_bill_number}")
         
         return jsonify({
             "success": True,
-            "token": current_value
+            "token": current_bill_number
         }), 200
     
     except Exception as e:
@@ -490,6 +532,15 @@ def get_bills():
             .limit(limit)
         )
         
+        # Convert datetime objects to ISO format strings for JSON serialization
+        for bill in bills:
+            if isinstance(bill.get('createdAt'), datetime):
+                bill['createdAt'] = bill['createdAt'].isoformat()
+            if isinstance(bill.get('createdAtISO'), str):
+                # Already a string, keep it
+                pass
+        
+        logger.debug(f"Fetching bills: Found {len(bills)} bills")
         return jsonify(bills), 200
     
     except Exception as e:
