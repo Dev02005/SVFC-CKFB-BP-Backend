@@ -8,7 +8,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from pymongo import MongoClient, errors
 from bson.objectid import ObjectId
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 import os
 import logging
@@ -465,14 +465,15 @@ def save_bill():
             }), 400
         
         # Prepare bill document
+        now_utc = datetime.now(timezone.utc)
         bill = {
             "items": data.get("items", []),
             "total": float(data.get("total", 0)),
             "payment": data.get("payment", "Unknown").strip(),
             "orderType": data.get("orderType", "Unknown").strip(),
             "token": int(data.get("token", 0)),
-            "createdAt": datetime.now(),
-            "createdAtISO": datetime.now().isoformat()
+            "createdAt": now_utc,
+            "createdAtISO": now_utc.isoformat()
         }
         
         # Save to database
