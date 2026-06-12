@@ -9,7 +9,7 @@ const {
 // ==========================================
 // API UTILS & HELPER FUNCTIONS
 // ==========================================
-const apiUrl = path => path;
+const apiUrl = path => "https://svfc-ckfb-pos-system.onrender.com" + path;
 const getAuthHeaders = () => {
   const token = localStorage.getItem('authToken') || localStorage.getItem('token');
   return {
