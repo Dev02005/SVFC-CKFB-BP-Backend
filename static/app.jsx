@@ -226,8 +226,8 @@ function LiveClock() {
   const now = useClock();
   return (
     <div className="datetime">
-      <span>Date: {now.toLocaleDateString()}</span>
-      <span>Time: {now.toLocaleTimeString()}</span>
+      <span>Date: {now.toLocaleDateString('en-US')}</span>
+      <span>Time: {now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true })}</span>
     </div>
   );
 }
@@ -292,15 +292,15 @@ const BillPanel = React.memo(function BillPanel({
       <div className="payment-options">
         <label>Payment Method:</label>
         <span className="print-value"> {paymentMethod}</span>
-        <CustomSelect 
-          className="screen-only" 
-          value={paymentMethod} 
+        <CustomSelect
+          className="screen-only"
+          value={paymentMethod}
           onChange={e => onPaymentChange(e.target.value)}
           options={[
-            {value: "UPI", label: "UPI"},
-            {value: "Cash", label: "Cash"},
-            {value: "Cash / UPI", label: "Cash / UPI"},
-            {value: "Card", label: "Card"}
+            { value: "UPI", label: "UPI" },
+            { value: "Cash", label: "Cash" },
+            { value: "Cash / UPI", label: "Cash / UPI" },
+            { value: "Card", label: "Card" }
           ]}
         />
       </div>
@@ -308,17 +308,17 @@ const BillPanel = React.memo(function BillPanel({
       <div className="payment-options">
         <label>Order Type:</label>
         <span className="print-value"> {orderType}</span>
-        <CustomSelect 
-          className="screen-only" 
-          value={orderType} 
+        <CustomSelect
+          className="screen-only"
+          value={orderType}
           onChange={e => onOrderTypeChange(e.target.value)}
           options={[
-            {value: "Dine-in / Take Out", label: "Dine-in / Take Out"},
-            {value: "Swiggy / Zomato", label: "Swiggy / Zomato"},
-            {value: "Dine-in", label: "Dine-in"},
-            {value: "Take Out", label: "Take Out"},
-            {value: "Zomato", label: "Zomato"},
-            {value: "Swiggy", label: "Swiggy"}
+            { value: "Dine-in / Take Out", label: "Dine-in / Take Out" },
+            { value: "Swiggy / Zomato", label: "Swiggy / Zomato" },
+            { value: "Dine-in", label: "Dine-in" },
+            { value: "Take Out", label: "Take Out" },
+            { value: "Zomato", label: "Zomato" },
+            { value: "Swiggy", label: "Swiggy" }
           ]}
         />
       </div>
@@ -474,7 +474,7 @@ const AddMenuItemModal = React.memo(function AddMenuItemModal({ onClose, showPop
   const [category, setCategory] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
-  const allCategories = Array.from(new Set(['Tiffins','Meals','Biryanis','Starters','Fast Food','Juice Bar', ...customCategories]));
+  const allCategories = Array.from(new Set(['Tiffins', 'Meals', 'Biryanis', 'Starters', 'Fast Food', 'Juice Bar', ...customCategories]));
 
   useEffect(() => { if (allCategories.length > 0) setCategory(allCategories[0]); }, []);
 
@@ -523,29 +523,29 @@ const AddMenuItemModal = React.memo(function AddMenuItemModal({ onClose, showPop
               </div>
               <div className="form-group">
                 <label>Category *</label>
-                <CustomSelect 
-                  value={category} 
-                  onChange={e => setCategory(e.target.value)} 
+                <CustomSelect
+                  value={category}
+                  onChange={e => setCategory(e.target.value)}
                   disabled={loading}
-                  options={allCategories.map(c => ({value: c, label: c}))}
+                  options={allCategories.map(c => ({ value: c, label: c }))}
                 />
               </div>
             </div>
-            
+
             <div className="add-menu-right">
               <div className="form-group" style={{ marginBottom: '15px' }}>
                 <label>Image URL (Optional)</label>
                 <input type="url" value={imageUrl} onChange={e => setImageUrl(e.target.value)} placeholder="https://example.com/image.jpg" disabled={loading} />
                 <div className="field-note" style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>Paste a full image URL</div>
               </div>
-              
+
               <label className="preview-label">Live Preview</label>
-              <div 
-                className="menu-item" 
+              <div
+                className="menu-item"
                 style={{
-                  pointerEvents: 'none', 
-                  margin: 0, 
-                  width: '100%', 
+                  pointerEvents: 'none',
+                  margin: 0,
+                  width: '100%',
                   cursor: 'default',
                   aspectRatio: '4/3',
                   backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
@@ -556,7 +556,7 @@ const AddMenuItemModal = React.memo(function AddMenuItemModal({ onClose, showPop
               >
                 {!imageUrl && (
                   <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.3 }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
                   </div>
                 )}
                 <div className="menu-item-info">
@@ -686,7 +686,7 @@ const DeleteMenuModal = React.memo(function DeleteMenuModal({ onClose, showPopup
   const [loading, setLoading] = useState(false);
 
   const filteredItems = useMemo(() =>
-    customItemIndex.filter(i => (i.category || 'Custom').trim() === activeCategory).sort((a,b) => a.name.localeCompare(b.name)),
+    customItemIndex.filter(i => (i.category || 'Custom').trim() === activeCategory).sort((a, b) => a.name.localeCompare(b.name)),
     [customItemIndex, activeCategory]
   );
 
@@ -770,7 +770,7 @@ const DeleteMenuModal = React.memo(function DeleteMenuModal({ onClose, showPopup
                 }
               </div>
             </div>
-            
+
             <div className="edit-menu-main">
               <div className="form-group">
                 <label>Select Items from Category *</label>
@@ -783,8 +783,8 @@ const DeleteMenuModal = React.memo(function DeleteMenuModal({ onClose, showPopup
                   {filteredItems.length === 0
                     ? <div className="delete-menu-empty-note">No items found in this category.</div>
                     : filteredItems.map(item => (
-                      <div 
-                        key={item.name} 
+                      <div
+                        key={item.name}
                         className={`menu-item delete-card-item ${selected.has(item.name) ? 'selected' : ''}`}
                         style={{
                           ...(item.imageUrl ? { backgroundImage: `url('${item.imageUrl}')`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}),
@@ -795,7 +795,7 @@ const DeleteMenuModal = React.memo(function DeleteMenuModal({ onClose, showPopup
                       >
                         {!item.imageUrl && (
                           <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.3 }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
                           </div>
                         )}
                         <div className="menu-item-info">
@@ -847,7 +847,7 @@ const EditMenuModal = React.memo(function EditMenuModal({ onClose, showPopup, cu
   const [loading, setLoading] = useState(false);
 
   const filteredItems = useMemo(() =>
-    customItemIndex.filter(i => (i.category || 'Custom').trim() === activeCategory).sort((a,b) => a.name.localeCompare(b.name)),
+    customItemIndex.filter(i => (i.category || 'Custom').trim() === activeCategory).sort((a, b) => a.name.localeCompare(b.name)),
     [customItemIndex, activeCategory]
   );
 
@@ -931,18 +931,18 @@ const EditMenuModal = React.memo(function EditMenuModal({ onClose, showPopup, cu
                 }
               </div>
             </div>
-            
+
             <div className="edit-menu-main">
               <div className="add-menu-split" style={{ marginBottom: 0 }}>
                 <div className="add-menu-left">
                   <div className="form-group">
                     <label>Select Item to Edit *</label>
-                    <CustomSelect 
-                      value={selectedName} 
-                      onChange={handleItemSelect} 
+                    <CustomSelect
+                      value={selectedName}
+                      onChange={handleItemSelect}
                       disabled={loading}
                       placeholder="-- Select Item --"
-                      options={filteredItems.map(i => ({value: i.name, label: i.name}))}
+                      options={filteredItems.map(i => ({ value: i.name, label: i.name }))}
                     />
                   </div>
                   <div className="form-group">
@@ -955,28 +955,28 @@ const EditMenuModal = React.memo(function EditMenuModal({ onClose, showPopup, cu
                   </div>
                   <div className="form-group">
                     <label>Category *</label>
-                    <CustomSelect 
-                      value={editCategory} 
-                      onChange={e => setEditCategory(e.target.value)} 
+                    <CustomSelect
+                      value={editCategory}
+                      onChange={e => setEditCategory(e.target.value)}
                       disabled={loading}
-                      options={allCategories.map(c => ({value: c, label: c}))}
+                      options={allCategories.map(c => ({ value: c, label: c }))}
                     />
                   </div>
                 </div>
-                
+
                 <div className="add-menu-right">
                   <div className="form-group" style={{ marginBottom: '15px' }}>
                     <label>Image URL (Optional)</label>
                     <input type="url" value={editImageUrl} onChange={e => { setEditImageUrl(e.target.value); setImgError(false); }} placeholder="https://example.com/image.jpg" disabled={loading} />
                   </div>
-                  
+
                   <label className="preview-label">Live Preview</label>
-                  <div 
-                    className="menu-item" 
+                  <div
+                    className="menu-item"
                     style={{
-                      pointerEvents: 'none', 
-                      margin: 0, 
-                      width: '100%', 
+                      pointerEvents: 'none',
+                      margin: 0,
+                      width: '100%',
                       cursor: 'default',
                       aspectRatio: '4/3',
                       backgroundImage: editImageUrl && !imgError ? `url(${editImageUrl})` : 'none',
@@ -987,7 +987,7 @@ const EditMenuModal = React.memo(function EditMenuModal({ onClose, showPopup, cu
                   >
                     {(!editImageUrl || imgError) && (
                       <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.3 }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
                       </div>
                     )}
                     <div className="menu-item-info">
@@ -1036,7 +1036,7 @@ function CustomDatePicker({ value, onChange, className }) {
       if (popupRef.current && popupRef.current.contains(e.target)) return;
       setIsOpen(false);
     };
-    
+
     const handleScroll = () => {
       if (isOpen) setIsOpen(false);
     };
@@ -1044,7 +1044,7 @@ function CustomDatePicker({ value, onChange, className }) {
     document.addEventListener('mousedown', handleClickOutside);
     window.addEventListener('scroll', handleScroll, true);
     window.addEventListener('resize', handleScroll);
-    
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       window.removeEventListener('scroll', handleScroll, true);
@@ -1057,7 +1057,7 @@ function CustomDatePicker({ value, onChange, className }) {
       const rect = wrapperRef.current.getBoundingClientRect();
       const popupHeight = 340; // Approx height of the calendar
       const popupWidth = 280;
-      
+
       let newStyle = {
         position: 'fixed',
         width: popupWidth,
@@ -1068,12 +1068,12 @@ function CustomDatePicker({ value, onChange, className }) {
       if (rect.right + popupWidth + 10 <= window.innerWidth) {
         newStyle.left = rect.right + 10;
         setPlacement('right');
-      } 
+      }
       // If no room on right, try left
       else if (rect.left - popupWidth - 10 >= 0) {
         newStyle.left = rect.left - popupWidth - 10;
         setPlacement('left');
-      } 
+      }
       // If neither fits (e.g. mobile), fallback to bottom/top
       else {
         newStyle.left = rect.left;
@@ -1146,14 +1146,14 @@ function CustomDatePicker({ value, onChange, className }) {
 
   return (
     <div className="custom-date-picker-wrapper" ref={wrapperRef}>
-      <div 
-        className={`custom-date-picker-input ${isOpen ? 'active' : ''} ${className || ''}`} 
+      <div
+        className={`custom-date-picker-input ${isOpen ? 'active' : ''} ${className || ''}`}
         onClick={() => setIsOpen(!isOpen)}
       >
         <span>{value || 'Select Date...'}</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
       </div>
-      
+
       {isOpen && ReactDOM.createPortal(
         <div className={`custom-date-picker-popup placement-${placement}`} style={popupStyle} ref={popupRef}>
           <div className="calendar-header">
@@ -1167,20 +1167,20 @@ function CustomDatePicker({ value, onChange, className }) {
               </button>
             </div>
           </div>
-          
+
           <div className="calendar-grid">
             {dayNames.map(day => <div key={day} className="calendar-day-name">{day}</div>)}
-            
+
             {Array.from({ length: firstDay }).map((_, i) => (
               <div key={`empty-${i}`} className="calendar-day empty"></div>
             ))}
-            
+
             {Array.from({ length: daysInMonth }).map((_, i) => {
               const day = i + 1;
               const isSelected = selectedDateObj && selectedDateObj.getDate() === day && selectedDateObj.getMonth() === month && selectedDateObj.getFullYear() === year;
               return (
-                <div 
-                  key={day} 
+                <div
+                  key={day}
                   className={`calendar-day ${isSelected ? 'selected' : ''}`}
                   onClick={() => handleDateClick(day)}
                 >
@@ -1194,7 +1194,7 @@ function CustomDatePicker({ value, onChange, className }) {
             <button type="button" onClick={handleTodayClick} className="calendar-btn calendar-today-btn">Today</button>
           </div>
         </div>
-      , document.body)}
+        , document.body)}
     </div>
   );
 }
@@ -1215,15 +1215,15 @@ function CustomSelect({ options, value, onChange, placeholder, className, disabl
       const rect = ref.current.getBoundingClientRect();
       const spaceBelow = window.innerHeight - rect.bottom;
       const spaceAbove = rect.top;
-      const dropdownHeight = 250; 
+      const dropdownHeight = 250;
       let top, bottom;
-      
+
       if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
         bottom = window.innerHeight - rect.top + 5;
       } else {
         top = rect.bottom + 5;
       }
-      
+
       setDropdownStyle({
         position: 'fixed',
         left: rect.left,
@@ -1249,8 +1249,8 @@ function CustomSelect({ options, value, onChange, placeholder, className, disabl
       {open && !disabled && (
         <div className="custom-select-dropdown" style={dropdownStyle}>
           {options.map(opt => (
-            <div 
-              key={opt.value} 
+            <div
+              key={opt.value}
               className={`custom-select-option ${value === opt.value ? 'selected' : ''}`}
               onClick={() => { onChange({ target: { value: opt.value } }); setOpen(false); }}
             >
@@ -1268,7 +1268,7 @@ function CustomInstallModal({ onClose, onConfirm }) {
     <div className="modal-overlay install-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="modal-content install-modal-content">
         <div className="install-modal-header">
-          <img src="/static/app_icon.png" alt="Logo" className="install-modal-logo" onError={(e)=>{e.target.style.display='none'}}/>
+          <img src="/static/app_icon.png" alt="Logo" className="install-modal-logo" onError={(e) => { e.target.style.display = 'none' }} />
           <div className="install-modal-title-group">
             <h2>Sri Vengamamba Food Court</h2>
             <p>Billing Portal App</p>
@@ -1371,10 +1371,10 @@ function LoginPage({ onLoginSuccess }) {
             {!installDone && installable && (
               <button className="pwa-install-btn" onClick={handleInstallClick} title="Install App on Mobile">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-                  <line x1="12" y1="7" x2="12" y2="13"/>
-                  <polyline points="9 10 12 13 15 10"/>
-                  <line x1="9" y1="17" x2="15" y2="17"/>
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                  <line x1="12" y1="7" x2="12" y2="13" />
+                  <polyline points="9 10 12 13 15 10" />
+                  <line x1="9" y1="17" x2="15" y2="17" />
                 </svg>
                 <span>Install App</span>
               </button>
@@ -1382,7 +1382,7 @@ function LoginPage({ onLoginSuccess }) {
             {installDone && (
               <div className="pwa-installed-badge">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12"/>
+                  <polyline points="20 6 9 17 4 12" />
                 </svg>
                 Installed!
               </div>
@@ -1405,15 +1405,15 @@ function LoginPage({ onLoginSuccess }) {
             <div className="form-group">
               <label htmlFor="email">Account</label>
               <CustomSelect
-              placeholder="Select account"
-              value={email}
-              onChange={e => { setEmail(e.target.value); setError(''); setSuccess(''); }}
-              options={[
-                { value: 'admin@svfc.com', label: 'Admin' },
-                { value: 'casher1@svfc.com', label: 'Casher 1' },
-                { value: 'casher2@svfc.com', label: 'Casher 2' }
-              ]}
-            />
+                placeholder="Select account"
+                value={email}
+                onChange={e => { setEmail(e.target.value); setError(''); setSuccess(''); }}
+                options={[
+                  { value: 'admin@svfc.com', label: 'Admin' },
+                  { value: 'casher1@svfc.com', label: 'Casher 1' },
+                  { value: 'casher2@svfc.com', label: 'Casher 2' }
+                ]}
+              />
             </div>
 
             <div className="form-group">
@@ -1433,13 +1433,13 @@ function LoginPage({ onLoginSuccess }) {
                   onClick={() => setShowPassword(v => !v)}
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  
+
                   {showPassword ? (
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
                   ) : (
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                   )}
-    
+
                 </button>
               </div>
             </div>
@@ -1518,16 +1518,16 @@ function POSPage() {
         fetch(apiUrl('/api/custom-categories'), { headers: getAuthHeadersOnly() }),
         fetch(apiUrl('/api/custom-items'), { headers: getAuthHeadersOnly() })
       ]);
-      
+
       const catsData = await catsRes.json();
       const itemsData = await itemsRes.json();
-      
+
       let cats = [];
       if (catsData.success && Array.isArray(catsData.categories)) {
         cats = catsData.categories.map(c => (c || '').trim()).filter(Boolean);
         setCustomCategories(cats.sort((a, b) => a.localeCompare(b)));
       }
-      
+
       let items = [];
       if (itemsData.success && Array.isArray(itemsData.items)) {
         items = itemsData.items;
@@ -1538,15 +1538,15 @@ function POSPage() {
           imageUrl: i.imageUrl || ''
         })));
       }
-      
+
       // Rebuild menuData completely from scratch (guarantees dynamic updates for add/edit/delete operations)
       const newMenuData = {};
-      
+
       // Initialize active custom categories
       cats.forEach(c => {
         newMenuData[c] = [];
       });
-      
+
       // Populate custom items into their respective category lists
       items.forEach(item => {
         const cat = item.category || 'Custom';
@@ -1555,7 +1555,7 @@ function POSPage() {
         }
         newMenuData[cat].push([item.name, item.price, item.imageUrl || '']);
       });
-      
+
       setMenuData(newMenuData);
 
       // Keep activeCategory synchronized
@@ -1584,14 +1584,14 @@ function POSPage() {
         if (saved?.payment) setPaymentMethod(saved.payment);
         if (saved?.orderType) setOrderType(saved.orderType);
       }
-    } catch {}
+    } catch { }
   }, []);
 
   // Save draft on unmount or change
   const saveDraft = useCallback(() => {
     try {
       localStorage.setItem(DRAFT_KEY, JSON.stringify({ cart, payment: paymentMethod, orderType, updatedAt: Date.now() }));
-    } catch {}
+    } catch { }
   }, [cart, paymentMethod, orderType]);
 
   useEffect(() => {
@@ -1782,9 +1782,9 @@ function POSPage() {
       </main>
 
       {/* Floating Action Button: Add Custom Item */}
-      <button 
-        className="fab-add-custom-btn" 
-        onClick={() => setShowCustomModal(true)} 
+      <button
+        className="fab-add-custom-btn"
+        onClick={() => setShowCustomModal(true)}
         title="Add Custom Item"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -1973,7 +1973,7 @@ function downloadAsXls(csvText, fileNameBase, sheetTitle) {
 
   document.body.appendChild(link);
   link.click();
-  
+
   setTimeout(() => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
@@ -2057,14 +2057,14 @@ function AnalyticsPage() {
 
     let f = activeBills;
     if (dateMode === 'today') {
-      f = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0,0,0,0); return d.getTime() === today.getTime(); });
+      f = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0, 0, 0, 0); return d.getTime() === today.getTime(); });
     } else if (dateMode === 'week') {
-      f = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0,0,0,0); return d.getTime() >= weekStart.getTime(); });
+      f = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0, 0, 0, 0); return d.getTime() >= weekStart.getTime(); });
     } else if (dateMode === 'month') {
-      f = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0,0,0,0); return d.getTime() >= monthStart.getTime(); });
+      f = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0, 0, 0, 0); return d.getTime() >= monthStart.getTime(); });
     } else if (dateMode === 'custom' && selectedDate) {
-      const customDate = new Date(selectedDate); customDate.setHours(0,0,0,0);
-      f = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0,0,0,0); return d.getTime() === customDate.getTime(); });
+      const customDate = new Date(selectedDate); customDate.setHours(0, 0, 0, 0);
+      f = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0, 0, 0, 0); return d.getTime() === customDate.getTime(); });
     } else if (dateMode === 'range' && rangeFrom && rangeTo) {
       const rf = new Date(rangeFrom), rt = new Date(rangeTo);
       f = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; return d >= rf && d <= rt; });
@@ -2082,11 +2082,11 @@ function AnalyticsPage() {
     f.forEach(b => { const d = parseBillDate(b); if (d) { const h = d.getHours(); hourCounts[h] = (hourCounts[h] || 0) + 1; } });
     const peakHour = Object.entries(hourCounts).reduce((a, b) => a[1] > b[1] ? a : b, [0, 0])[0];
     // Week / month totals
-    const weekBills = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0,0,0,0); return d.getTime() >= weekStart.getTime(); });
-    const monthBills = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0,0,0,0); return d.getTime() >= monthStart.getTime(); });
+    const weekBills = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0, 0, 0, 0); return d.getTime() >= weekStart.getTime(); });
+    const monthBills = activeBills.filter(b => { const d = parseBillDate(b); if (!d) return false; d.setHours(0, 0, 0, 0); return d.getTime() >= monthStart.getTime(); });
     setStats({
       total: totalSales, count, avg,
-      peak: Object.keys(hourCounts).length > 0 ? String(peakHour).padStart(2,'0') + ':00' : '--:--',
+      peak: Object.keys(hourCounts).length > 0 ? String(peakHour).padStart(2, '0') + ':00' : '--:--',
       weekTotal: weekBills.reduce((s, b) => s + (b.total || 0), 0), weekCount: weekBills.length,
       monthTotal: monthBills.reduce((s, b) => s + (b.total || 0), 0), monthCount: monthBills.length
     });
@@ -2322,7 +2322,7 @@ function AnalyticsPage() {
   const itemAggs = useMemo(() => {
     const counts = {}, totals = {};
     filtered.forEach(b => { (b.items || []).forEach(i => { counts[i.name] = (counts[i.name] || 0) + (i.qty || 1); totals[i.name] = (totals[i.name] || 0) + (i.price || 0) * (i.qty || 1); }); });
-    return Object.entries(counts).map(([name, qty]) => ({ name, qty, total: totals[name] || 0 })).sort((a,b) => b.total - a.total);
+    return Object.entries(counts).map(([name, qty]) => ({ name, qty, total: totals[name] || 0 })).sort((a, b) => b.total - a.total);
   }, [filtered]);
 
   // Bill table rows
@@ -2367,17 +2367,17 @@ function AnalyticsPage() {
         if (chartInstances.current.pay) chartInstances.current.pay.destroy();
         chartInstances.current.pay = new window.Chart(payChartRef.current, {
           type: 'doughnut',
-          data: { labels: payKeys, datasets: [{ data: payKeys.map(k => payBreakdown[k]), backgroundColor: ['rgba(251,191,36,0.85)','rgba(74,222,128,0.85)','rgba(245,158,11,0.85)','rgba(248,113,113,0.85)','rgba(251,146,60,0.85)'], borderWidth: 2 }] },
+          data: { labels: payKeys, datasets: [{ data: payKeys.map(k => payBreakdown[k]), backgroundColor: ['rgba(251,191,36,0.85)', 'rgba(74,222,128,0.85)', 'rgba(245,158,11,0.85)', 'rgba(248,113,113,0.85)', 'rgba(251,146,60,0.85)'], borderWidth: 2 }] },
           options: { responsive: true, maintainAspectRatio: false }
         });
       }
       if (salesChartRef.current) {
         const activeBills = allBills.filter(b => !b.deleted);
-        const today2 = new Date(); today2.setHours(0,0,0,0);
+        const today2 = new Date(); today2.setHours(0, 0, 0, 0);
         const last7 = [], sales7 = [];
         for (let i = 6; i >= 0; i--) {
           const d = new Date(today2); d.setDate(d.getDate() - i);
-          const dayBills = activeBills.filter(b => { const bd = parseBillDate(b); if (!bd) return false; bd.setHours(0,0,0,0); return bd.getTime() === d.getTime(); });
+          const dayBills = activeBills.filter(b => { const bd = parseBillDate(b); if (!bd) return false; bd.setHours(0, 0, 0, 0); return bd.getTime() === d.getTime(); });
           last7.push(d.toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }));
           sales7.push(dayBills.reduce((s, b) => s + (b.total || 0), 0));
         }
@@ -2421,7 +2421,7 @@ function AnalyticsPage() {
               {/* Date Picker */}
               <div className="date-picker-panel">
                 <div className="date-controls">
-                  {['today','week','month','custom','range'].map(mode => (
+                  {['today', 'week', 'month', 'custom', 'range'].map(mode => (
                     <button key={mode} className={`date-btn ${dateMode === mode ? 'active' : ''}`} onClick={() => setDateMode(mode)}>
                       {mode === 'today' ? 'Today' : mode === 'week' ? 'This Week' : mode === 'month' ? 'This Month' : mode === 'custom' ? 'Pick Date' : 'Date Range'}
                     </button>
@@ -2516,8 +2516,8 @@ function AnalyticsPage() {
                         ))}
                         <tr className="report-total">
                           <td><strong>TOTAL</strong></td>
-                          <td className="qty-cell"><strong>{itemAggs.reduce((s,i)=>s+i.qty,0)}</strong></td>
-                          <td className="amount-cell"><strong>₹{itemAggs.reduce((s,i)=>s+i.total,0).toLocaleString('en-IN')}</strong></td>
+                          <td className="qty-cell"><strong>{itemAggs.reduce((s, i) => s + i.qty, 0)}</strong></td>
+                          <td className="amount-cell"><strong>₹{itemAggs.reduce((s, i) => s + i.total, 0).toLocaleString('en-IN')}</strong></td>
                         </tr>
                       </>
                     )}
@@ -2535,8 +2535,8 @@ function AnalyticsPage() {
                         Manage Bills
                       </button>
                     )}
-                    <button className="toggle-hidden-btn" onClick={() => setBillsPage(p => Math.max(1, p-1))} disabled={billsPage === 1} style={{ minWidth: '40px' }}>◀</button>
-                    <button className="toggle-hidden-btn" onClick={() => setBillsPage(p => Math.min(totalPages, p+1))} disabled={billsPage >= totalPages} style={{ minWidth: '40px' }}>▶</button>
+                    <button className="toggle-hidden-btn" onClick={() => setBillsPage(p => Math.max(1, p - 1))} disabled={billsPage === 1} style={{ minWidth: '40px' }}>◀</button>
+                    <button className="toggle-hidden-btn" onClick={() => setBillsPage(p => Math.min(totalPages, p + 1))} disabled={billsPage >= totalPages} style={{ minWidth: '40px' }}>▶</button>
                   </div>
                 </h3>
                 <div className="search-panel">
@@ -2604,7 +2604,7 @@ function AnalyticsPage() {
                         return next;
                       });
                     }}>
-                      <input type="checkbox" checked={isChecked} onChange={() => {}} />
+                      <input type="checkbox" checked={isChecked} onChange={() => { }} />
                       <label style={{ cursor: 'pointer' }}>
                         <strong>Bill #{b.token || b.billNo}</strong> - ₹{b.total} ({b.payment})<br />
                         <span style={{ fontSize: '11px', color: '#888' }}>{formattedDate} {b.deleted ? '[Soft-Deleted]' : ''}</span>

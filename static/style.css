@@ -3956,6 +3956,10 @@ td.remove-cell {
     display: block !important;
   }
 
+  .bill-header br {
+    display: none !important;
+  }
+
   .bill-number {
     display: block !important;
     font-size: 8px !important;

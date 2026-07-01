@@ -280,7 +280,7 @@ function LiveClock() {
   const now = useClock();
   return /*#__PURE__*/React.createElement("div", {
     className: "datetime"
-  }, /*#__PURE__*/React.createElement("span", null, "Date: ", now.toLocaleDateString()), /*#__PURE__*/React.createElement("span", null, "Time: ", now.toLocaleTimeString()));
+  }, /*#__PURE__*/React.createElement("span", null, "Date: ", now.toLocaleDateString('en-US')), /*#__PURE__*/React.createElement("span", null, "Time: ", now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true })));
 }
 const BillPanel = React.memo(function BillPanel({
   cart,
