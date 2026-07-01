@@ -1,4 +1,4 @@
-const CACHE_NAME = 'svfc-pos-v13';
+const CACHE_NAME = 'svfc-pos-v14';
 const URLS_TO_CACHE = [
   '/',
   '/static/style.css',
