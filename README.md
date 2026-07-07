@@ -38,27 +38,13 @@ A Point of Sale (POS) and Analytics system designed for Sri Vengamamba Food Cour
 ### Prerequisite
 Make sure you have Python 3.8+ and Node.js (optional, for asset changes) installed on your system.
 
-### 1. Clone & Initialize Environment
-In the root directory, create and activate a Python virtual environment:
-
-```bash
-# Create virtual environment
-python -m venv .venv
-
-# Activate virtual environment (Windows)
-.venv\Scripts\activate
-
-# Activate virtual environment (macOS/Linux)
-source .venv/bin/activate
-```
-
-### 2. Install Dependencies
+### 1. Install Dependencies
 Install the required python packages:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Configure .env File
+### 2. Configure .env File
 Create a .env file in the root folder with the following variables:
 ```env
 MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/svfc_pos?retryWrites=true&w=majority
@@ -69,15 +55,6 @@ DEBUG=True
 
 ---
 
-## Running Locally
-
-Start the backend Flask server:
-```bash
-python app.py
-```
-By default, the application will be hosted on http://localhost:5000. 
-
----
 
 ## Deployment
 
@@ -87,4 +64,4 @@ The application includes a vercel.json configuration and is ready for Vercel dep
 
 ## License
 
-This software and its associated documentation are the exclusive proprietary property of dev. All rights reserved. Use, reproduction, or distribution without explicit permission is strictly prohibited. For details, see the [LICENSE](LICENSE) file.
+This software and its associated documentation are the exclusive proprietary property of dev aka Praneeth Karri. All rights reserved. Use, reproduction, or distribution without explicit permission is strictly prohibited. For details, see the [LICENSE](LICENSE) file.
