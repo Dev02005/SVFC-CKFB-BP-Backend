@@ -3943,7 +3943,7 @@ td.remove-cell {
   }
   .login-header-titles {
     width: 100%;
-    margin-right: 40px; /* Leave space for icon */
+    padding: 0 40px; /* Equal padding keeps text perfectly centered while leaving space for icon */
   }
   .login-header-actions {
     position: absolute;
