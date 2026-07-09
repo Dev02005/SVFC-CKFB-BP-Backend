@@ -473,7 +473,8 @@ body {
   padding: 0 8px;
 }
 
-.billing-portal-heading h1 {
+.billing-portal-heading h1,
+.login-header-titles h1 {
   margin: 0;
   font-size: clamp(20px, 3vw, 30px);
   color: var(--accent);
@@ -481,7 +482,8 @@ body {
   letter-spacing: 1px;
 }
 
-.billing-portal-heading h3 {
+.billing-portal-heading h3,
+.login-header-titles h3 {
   margin: 4px 0 0;
   color: var(--text-muted);
   font-weight: 600;
@@ -490,7 +492,8 @@ body {
   letter-spacing: 1.2px;
 }
 
-.billing-portal-heading .subtitle {
+.billing-portal-heading .subtitle,
+.login-header-titles .subtitle {
   margin: 2px 0 0;
   color: #d1d5db;
   font-size: 12px;
@@ -3891,11 +3894,13 @@ td.remove-cell {
     font-size: 13px;
     padding: 8px 12px;
   }
-  .billing-portal-heading h1 {
+  .billing-portal-heading h1,
+  .login-header-titles h1 {
     font-size: 20px !important;
     padding: 0 10px !important;
   }
-  .billing-portal-heading h3 {
+  .billing-portal-heading h3,
+  .login-header-titles h3 {
     font-size: 13px !important;
     padding: 0 10px !important;
   }

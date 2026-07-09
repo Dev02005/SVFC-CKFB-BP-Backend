@@ -1365,7 +1365,8 @@ function LoginPage({ onLoginSuccess }) {
           <div className="login-header-spacer" />
           <div className="login-header-titles">
             <h1>Sri Vengamamba Food Court</h1>
-            <h3>Chinese Kitchen / Fruit Bar</h3>
+            <p className="subtitle">Chinese Kitchen / Juice Bar</p>
+            <h3>Billing Portal</h3>
           </div>
           <div className="login-header-actions">
             {!installDone && installable && (
@@ -1734,8 +1735,8 @@ function POSPage() {
           </div>
           <div className="billing-portal-heading">
             <h1>Sri Vengamamba Food Court</h1>
-            <h3>Billing Portal</h3>
             <p className="subtitle">Chinese Kitchen / Juice Bar</p>
+            <h3>Billing Portal</h3>
           </div>
           <div className="analytics-btn-wrapper">
             <button className="header-icon-btn analytics-nav-btn" onClick={() => navigate('/analytics')} title="View Analytics">
@@ -2396,8 +2397,8 @@ function AnalyticsPage() {
     <div className="analytics-shell">
       <header className="analytics-header">
         <h1>Sri Vengamamba Food Court</h1>
-        <h3>Analytics Dashboard</h3>
         <p className="subtitle">Sales & Revenue Analytics</p>
+        <h3>Analytics Dashboard</h3>
         <div className="header-nav-buttons">
           <button className="download-report-nav-btn" onClick={() => setShowDownloadModal(true)} title="Download Report">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="btn-logo-svg">

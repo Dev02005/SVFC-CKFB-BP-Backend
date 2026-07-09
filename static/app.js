@@ -1783,7 +1783,9 @@ function LoginPage({
     className: "login-header-spacer"
   }), /*#__PURE__*/React.createElement("div", {
     className: "login-header-titles"
-  }, /*#__PURE__*/React.createElement("h1", null, "Sri Vengamamba Food Court"), /*#__PURE__*/React.createElement("h3", null, "Chinese Kitchen / Fruit Bar")), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h1", null, "Sri Vengamamba Food Court"), /*#__PURE__*/React.createElement("p", {
+    className: "subtitle"
+  }, "Chinese Kitchen / Juice Bar"), /*#__PURE__*/React.createElement("h3", null, "Billing Portal")), /*#__PURE__*/React.createElement("div", {
     className: "login-header-actions"
   }, !installDone && installable && /*#__PURE__*/React.createElement("button", {
     className: "pwa-install-btn",
@@ -2260,9 +2262,9 @@ function POSPage() {
     onLogout: logout
   })), /*#__PURE__*/React.createElement("div", {
     className: "billing-portal-heading"
-  }, /*#__PURE__*/React.createElement("h1", null, "Sri Vengamamba Food Court"), /*#__PURE__*/React.createElement("h3", null, "Billing Portal"), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("h1", null, "Sri Vengamamba Food Court"), /*#__PURE__*/React.createElement("p", {
     className: "subtitle"
-  }, "Chinese Kitchen / Juice Bar")), /*#__PURE__*/React.createElement("div", {
+  }, "Chinese Kitchen / Juice Bar"), /*#__PURE__*/React.createElement("h3", null, "Billing Portal")), /*#__PURE__*/React.createElement("div", {
     className: "analytics-btn-wrapper"
   }, /*#__PURE__*/React.createElement("button", {
     className: "header-icon-btn analytics-nav-btn",
@@ -3093,9 +3095,9 @@ function AnalyticsPage() {
     className: "analytics-shell"
   }, /*#__PURE__*/React.createElement("header", {
     className: "analytics-header"
-  }, /*#__PURE__*/React.createElement("h1", null, "Sri Vengamamba Food Court"), /*#__PURE__*/React.createElement("h3", null, "Analytics Dashboard"), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("h1", null, "Sri Vengamamba Food Court"), /*#__PURE__*/React.createElement("p", {
     className: "subtitle"
-  }, "Sales & Revenue Analytics"), /*#__PURE__*/React.createElement("div", {
+  }, "Sales & Revenue Analytics"), /*#__PURE__*/React.createElement("h3", null, "Analytics Dashboard"), /*#__PURE__*/React.createElement("div", {
     className: "header-nav-buttons"
   }, /*#__PURE__*/React.createElement("button", {
     className: "download-report-nav-btn",

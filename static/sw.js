@@ -1,8 +1,9 @@
-const CACHE_NAME = 'svfc-pos-v14';
+const CACHE_NAME = 'svfc-pos-v19';
 const URLS_TO_CACHE = [
   '/',
   '/static/style.css',
   '/static/app.jsx',
+  '/static/app.js',
   '/static/app_icon.png',
   '/manifest.json'
 ];
@@ -26,8 +27,8 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   
-  // Network-first for API calls, HTML, CSS, and JSX to ensure app updates are visible immediately
-  if (url.pathname.includes('/api/') || url.pathname === '/' || url.pathname.endsWith('.jsx') || url.pathname.endsWith('.css') || url.pathname.endsWith('.json')) {
+  // Network-first for API calls, HTML, CSS, and JS/JSX to ensure app updates are visible immediately
+  if (url.pathname.includes('/api/') || url.pathname === '/' || url.pathname.endsWith('.jsx') || url.pathname.endsWith('.js') || url.pathname.endsWith('.css') || url.pathname.endsWith('.json')) {
     event.respondWith(
       fetch(event.request)
         .then(response => {
